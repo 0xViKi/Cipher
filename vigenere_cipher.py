@@ -32,12 +32,7 @@ def vigenere_encryption(msg, key):
     msg_len = len(en_msg_wo_space)
     encryption_key = check_key_len(key, msg_len)
     cipher = []
-    if msg.isupper():
-        encryption_key = encryption_key.upper()
-        start = ord('A')
-    else:
-        encryption_key = encryption_key.lower()
-        start = ord('a')
+    start = ord('a')
     for enm, enk in zip(en_msg_wo_space, encryption_key):
         shift = ord(enm) - start
         pos = start + (ord(enk) - start + shift) % 26
@@ -53,12 +48,7 @@ def vigenere_decryption(msg, key):
     msg_len = len(de_msg_wo_space)
     decryption_key = check_key_len(key, msg_len)
     decipher = []
-    if msg.isupper():
-        decryption_key = decryption_key.upper()
-        start = ord('Z')
-    else:
-        start = ord('z')
-        decryption_key = decryption_key.lower()
+    start = ord('z')
     for dem, dek in zip(de_msg_wo_space, decryption_key):
         shift = abs(ord(dem) - start + 1)
         pos = start - (ord(dek) - start + shift) % 26
@@ -82,6 +72,8 @@ def main():
     message = input('Enter Message to be Encrypted/Decrypted: ')
     key = input('Enter Key for Encryption/Decryption: ')
     print("------------------------------------------------------")
+    message = message.lower()
+    key = key.lower()
     if option == '01' or option == '1':
         vigenere_encryption(message, key)
     elif option == '02' or option == '2':
