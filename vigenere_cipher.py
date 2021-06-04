@@ -28,15 +28,23 @@ def space_insert(message, space_position):
 
 
 def vigenere_encryption(msg, key):
+
     en_msg_wo_space, en_space_position = space_pos(msg)
     msg_len = len(en_msg_wo_space)
     encryption_key = check_key_len(key, msg_len)
     cipher = []
-    start = ord('a')
+    
     for enm, enk in zip(en_msg_wo_space, encryption_key):
+       
+        if enm.isupper():
+            start = ord('A')
+        else:
+            start = ord('a')
+
         shift = ord(enm) - start
         pos = start + (ord(enk) - start + shift) % 26
         cipher.append(chr(pos))
+
     message = ''.join(cipher)
     encrypted_message = space_insert(message, en_space_position)
     print(encrypted_message)
@@ -48,11 +56,18 @@ def vigenere_decryption(msg, key):
     msg_len = len(de_msg_wo_space)
     decryption_key = check_key_len(key, msg_len)
     decipher = []
-    start = ord('z')
+    
     for dem, dek in zip(de_msg_wo_space, decryption_key):
+        
+        if dem.isupper():
+            start = ord('Z')
+        else:
+            start = ord('z')
+
         shift = abs(ord(dem) - start + 1)
         pos = start - (ord(dek) - start + shift) % 26
         decipher.append(chr(pos))
+    
     message = ''.join(decipher)
     encrypted_message = space_insert(message, de_space_position)
     print(encrypted_message)
@@ -72,7 +87,7 @@ def main():
     message = input('Enter Message to be Encrypted/Decrypted: ')
     key = input('Enter Key for Encryption/Decryption: ')
     print("------------------------------------------------------")
-    message = message.lower()
+    message = message
     key = key.lower()
     if option == '01' or option == '1':
         vigenere_encryption(message, key)
